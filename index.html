@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Ntpl模板引擎</title>
+</head>
+<body>
+<textarea id="tpl" style="display:none">
+    <h1>title:<%= title %></h1>
+        <% if(list.length>1) { %>
+            <h2>输出list，共有<%= list.length %>个元素</h2>
+            <ul>
+                <% for(var i=0;i<5;i++){ %>
+                    <li><%= list[i] %></li>
+                <% } %>
+            </ul>
+        <% }else{ %>
+            <h2>没有list数据</h2>
+        <% } %>
+</textarea>
+<div id="result"></div>
+<script type="text/javascript" src="nTpl.js"></script>
+<script type="text/javascript">
+    var data={
+        "title":'啊哦~这是标题',
+        "list":[
+            'test1:这是内容',
+            'test2:2',
+            'test3:3',
+            'test4:list[5]未定义，模板系统会输出空'
+        ]
+    };
+    var res = NTpl.tpl('tpl',data);
+    document.getElementById('result').innerHTML = res;
+</script>
+</body>
+</html>

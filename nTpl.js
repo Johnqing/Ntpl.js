@@ -4,7 +4,8 @@
  * @return 如果无data，直接返回编译后的函数；如果有data，返回html。
 */
 (function(win, undefined){
-    var NTpl = win.NTpl = win.NTpl || {};
+    var NTpl = win.NTpl = win.NTpl || {},
+        doc = win.document;
     /**
      * 编译器
      * @param str
@@ -42,7 +43,7 @@
      */
     NTpl.tpl = function(str, data){
         var fn = (function(){
-            var elem = document.getElementById(str);
+            var elem = doc.getElementById(str);
             if(elem){
                 if(Nt.cache[str]){
                     return Nt.cache[str];

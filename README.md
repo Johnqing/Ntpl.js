@@ -1,6 +1,8 @@
 Ntpl模板引擎
 =========
 
+> 灰常轻量级。吼吼
+
 使用方法：
 
 var res = NTpl.tpl('tpl',data);

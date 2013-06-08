@@ -7,6 +7,6 @@ Ntpl模板引擎
 
 var res = NTpl.tpl('tpl',data);
 
-tpl为存放容器id，data为数据
-
-res的值为模板字符串
+* tpl为存放容器id或模版字符串
+* data为数据模型
+* res是模版引擎返回拼装完成的字符串模版

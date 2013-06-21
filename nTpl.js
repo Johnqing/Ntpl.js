@@ -56,6 +56,7 @@
         var lit = new RegExp("((^|"+NTpl.rightDelimiter+")[^\t]*)'","g"),
             lit2 = new RegExp("\t=(.*?)"+NTpl.rightDelimiter,"g");
         var tpl = str.replace(/[\r\t\n]/g, " ")
+            .replace(/=\s/g,'=')
             .split(NTpl.leftDelimiter).join("\t")
             .replace(lit, "$1\r")
             .replace(lit2, "',$1,'")

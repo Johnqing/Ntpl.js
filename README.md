@@ -87,11 +87,11 @@ document.getElementById('result').innerHTML = res;
 判断语句：
 
 <pre>
-&lt;%if(list.length){%&gt;
-    &lt;h2&gt;&lt;%=list.length%&gt;&lt;/h2&gt;
-&lt;%}else{%&gt;
-    &lt;h2&gt;list长度为0&lt;h2&gt;
-&lt;%}%&gt;
+&lt;% if(list.length){ %&gt;
+    &lt;h2&gt;&lt;%= list.length %&gt;&lt;/h2&gt;
+&lt;% }else{ %&gt;
+    &lt;h2&gt; list长度为0 &lt;h2&gt;
+&lt;% } %&gt;
 </pre>
 
 循环语句：

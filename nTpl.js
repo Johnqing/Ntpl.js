@@ -51,7 +51,6 @@
                 return _compile(str, data);
             }
         })();
-        //console.log(fn);
         var result =  fn( data );
         fn = null;
         return result;

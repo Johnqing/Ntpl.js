@@ -15,26 +15,8 @@
     var _compile  = function(str){
         var fnBody = "var _tpl_array=[];\nvar fn=(function(__data__){\nvar _tplName='';\nfor(name in __data__){\n_tplName+=('var '+name+'=__data__[\"'+name+'\"];');\n};\neval(_tplName);\n_tpl_array.push('"+_analysisStr(str)+"');\n_tplName=null;\n})(tplObj);\nfn = null;\nreturn _tpl_array.join('');";
         return new Function('tplObj', fnBody);
-    }
-    /**
-     * 解析器
-     * @param str
-     * @returns {string} 返回模板
-     * @private
-     */
-    var _analysisStr = function(str){
-        var tpl = str.replace(/[\r\t\n]/g, " ")
-            .split("<%").join("\t")
-            .replace(/((^|%>)[^\t]*)'/g, "$1\r")
-            .replace(/\t=(.*?)%>/g, "',$1,'")
-            .split("\t")
-            .join("');")
-            .split("%>")
-            .join("_tpl_array.push('")
-            .split("\r")
-            .join("\\'");
-        return tpl;
-    }
+    };
+
     /**
      * 对外接口函数
      * @param str id
@@ -45,8 +27,8 @@
         var fn = (function(){
             var elem = doc.getElementById(str);
             if(elem){
-                if(Nt.cache[str]){
-                    return Nt.cache[str];
+                if(nt.cache[str]){
+                    return nt.cache[str];
                 }
                 var html = /^(textarea|input)$/i.test(elem.nodeName) ? elem.value : elem.innerHTML;
                 return _compile(html);
@@ -58,10 +40,40 @@
         fn = null;
         return result;
     };
-
-    var Nt = NTpl.tpl;
+    /**
+     * 分隔符
+     * @type {string}
+     */
+    NTpl.leftDelimiter =  NTpl.leftDelimiter || '<%';
+    NTpl.rightDelimiter = NTpl.rightDelimiter || '%>';
+    /**
+     * 解析器
+     * @param str
+     * @returns {string} 返回模板
+     * @private
+     */
+    var _analysisStr = function(str){
+        var lit = new RegExp("((^|"+NTpl.rightDelimiter+")[^\t]*)'","g"),
+            lit2 = new RegExp("\t=(.*?)"+NTpl.rightDelimiter,"g");
+        var tpl = str.replace(/[\r\t\n]/g, " ")
+            .split(NTpl.leftDelimiter).join("\t")
+            .replace(lit, "$1\r")
+            .replace(lit2, "',$1,'")
+            .split("\t")
+            .join("');")
+            .split(NTpl.rightDelimiter)
+            .join("_tpl_array.push('")
+            .split("\r")
+            .join("\\'");
+        return tpl;
+    };
+    /**
+     * 命名空间
+     * @type {*}
+     */
+    var nt = NTpl.tpl;
     /**
      * 缓存
      */
-    Nt.cache = {};
+    nt.cache = {};
 }(this));

@@ -157,6 +157,6 @@ var fontFamily = {
     ]
 };
 var familyTpl = Ntpl.tpl(fontFamily.tpl(),fontFamily);
-$('#fontFamily').html(familyTpl);
+document.getElementById('result').innerHTML = familyTpl;
 </pre>
 

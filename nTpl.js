@@ -7,14 +7,28 @@
     var NTpl = win.NTpl = win.NTpl || {},
         doc = win.document;
     /**
+     * 数据解析
+     * @param data
+     * @returns {string}
+     */
+    var dataCmd = function(data){
+        var _data = '\nvar helper = this,\n';
+        for(title in data){
+            _data += (title+' = $data["'+title+'"],\n');
+        };
+        _data += '$out=0;'
+        return _data;
+    };
+    /**
      * 编译器
      * @param str
-     * @returns {Function} 返回模板拼接函数
+     * @param data
+     * @returns {Function}
      * @private
      */
-    var _compile  = function(str){
-        var fnBody = "var _tpl_array=[];\nvar fn=(function(__data__){\nvar _tplName='';\nfor(name in __data__){\n_tplName+=('var '+name+'=__data__[\"'+name+'\"];');\n};\neval(_tplName);\n_tpl_array.push('"+_analysisStr(str)+"');\n_tplName=null;\n})(tplObj);\nfn = null;\nreturn _tpl_array.join('');";
-        return new Function('tplObj', fnBody);
+    var _compile  = function(str, data){
+        var fnBody = "var _tpl_array=[];\nvar fn=(function(){"+dataCmd(data)+"\n_tpl_array.push('"+_analysisStr(str)+"');\n_tplName=null;\n})();\nfn = null;\nreturn _tpl_array.join('');";
+        return new Function('$data', fnBody);
     };
 
     /**
@@ -24,6 +38,7 @@
      * @returns {*}
      */
     NTpl.tpl = function(str, data){
+        data = typeof data === 'object' ? data : null;
         var fn = (function(){
             var elem = doc.getElementById(str);
             if(elem){
@@ -31,12 +46,13 @@
                     return nt.cache[str];
                 }
                 var html = /^(textarea|input)$/i.test(elem.nodeName) ? elem.value : elem.innerHTML;
-                return _compile(html);
+                return _compile(html, data);
             }else{
-                return _compile(str);
+                return _compile(str, data);
             }
         })();
-        var result = typeof data === 'object' ? fn( data ) : fn;
+        //console.log(fn);
+        var result =  fn( data );
         fn = null;
         return result;
     };

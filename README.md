@@ -104,18 +104,18 @@ document.getElementById('result').innerHTML = res;
 调用
 <pre>
 NTpl.leftDelimiter = "&lt;#";
-    NTpl.rightDelimiter = "#&gt;";
-    var data={
-        "title":'啊哦~这是标题',
-        "list":[
-            'test1:这是内容',
-            'test2:2',
-            'test3:3',
-            'test4:第五项未定义，模板系统会输出空'
-        ]
-    };
-    var res = NTpl.tpl('tpl',data);
-    document.getElementById('result').innerHTML = res;
+NTpl.rightDelimiter = "#&gt;";
+var data={
+    "title":'啊哦~这是标题',
+    "list":[
+        'test1:这是内容',
+        'test2:2',
+        'test3:3',
+        'test4:第五项未定义，模板系统会输出空'
+    ]
+};
+var res = NTpl.tpl('tpl',data);
+document.getElementById('result').innerHTML = res;
 </pre>
 
 

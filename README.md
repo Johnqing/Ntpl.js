@@ -19,33 +19,33 @@ Ntpl模板引擎
 1. 引入ntpl.js是必须的
 2. 可以使用任何容器存储模板片段(示例中使用textarea作为容器)
 <pre>
-<!--textarea作为容器的好处是浏览器不会解析-->
-<textarea id="tpl" style="display:none">
-    <h1>title:<%= title %></h1>
-        <% if(list.length>1) { %>
-            <h2>输出list，共有<%= list.length %>个元素</h2>
-            <ul>
-                <% for(var i=0;i<5;i++){ %>
-                    <li><%= list[i] %></li>
-                <% } %>
-            </ul>
-        <% }else{ %>
-            <h2>没有list数据</h2>
-        <% } %>
-</textarea>
+&lt;!--textarea作为容器的好处是浏览器不会解析--&gt;
+&lt;textarea id="tpl" style="display:none"&gt;
+    &lt;h1&gt;title:&lt;%= title %&gt;&lt;/h1&gt;
+        &lt;% if(list.length&gt;1) { %&gt;
+            &lt;h2&gt;输出list，共有&lt;%= list.length %&gt;个元素&lt;/h2&gt;
+            &lt;ul&gt;
+                &lt;% for(var i=0;i&lt;5;i++){ %&gt;
+                    &lt;li&gt;&lt;%= list[i] %&gt;&lt;/li&gt;
+                &lt;% } %&gt;
+            &lt;/ul&gt;
+        &lt;% }else{ %&gt;
+            &lt;h2&gt;没有list数据&lt;/h2&gt;
+        &lt;% } %&gt;
+&lt;/textarea&gt;
 </pre>
 3. 模板也可以直接存储在一个变量中（下面的例子：可以在[这里](https://github.com/Johnqing/SocialCard/blob/master/assets/js/controller.js)找到）
 <pre>
- var tpl = '<% for(var i=0; i<data.length; i++){ %>'+
-              '<div class="familyName">'+
-                  '<span><%= data[i].name %></span>'+
-                  '<dl>'+
-                  '<% for(var j=0, family=data[i].family; j<family.length; j++){ %>'+
-                      '<dd class="<%= family[j].type %>"><%= family[j].name %></dd>'+
-                  '<% } %>'+
-                  '</dl>'+
-              '</div>'+
-          '<% } %>';
+ var tpl = '&lt;% for(var i=0; i&lt;data.length; i++){ %&gt;'+
+              '&lt;div class="familyName"&gt;'+
+                  '&lt;span&gt;&lt;%= data[i].name %&gt;&lt;/span&gt;'+
+                  '&lt;dl&gt;'+
+                  '&lt;% for(var j=0, family=data[i].family; j&lt;family.length; j++){ %&gt;'+
+                      '&lt;dd class="&lt;%= family[j].type %&gt;"&gt;&lt;%= family[j].name %&gt;&lt;/dd&gt;'+
+                  '&lt;% } %&gt;'+
+                  '&lt;/dl&gt;'+
+              '&lt;/div&gt;'+
+          '&lt;% } %&gt;';
 </pre>
 
 ##调用##
@@ -73,7 +73,7 @@ NTpl.tpl('id', data);
 </pre>
 4. tpl也接收字符串
 <pre>
-NTpl.tpl('<div><%= name %></div>', data);
+NTpl.tpl('&lt;div&gt;&lt;%= name %&gt;&lt;/div&gt;', data);
 </pre>
 5. 插入容器
 <pre>
@@ -85,19 +85,21 @@ document.getElementById('result').innerHTML = res;
 分隔符为&lt;%%&gt;
 
 判断语句：
+
 <pre>
-<%if(list.length){%>
-    <h2><%=list.length%></h2>
-<%}else{%>
-    <h2>list长度为0<h2>
-<%}%>
+&lt;%if(list.length){%&gt;
+    &lt;h2&gt;&lt;%=list.length%&gt;&lt;/h2&gt;
+&lt;%}else{%&gt;
+    &lt;h2&gt;list长度为0&lt;h2&gt;
+&lt;%}%&gt;
+</pre>
 
 循环语句：
 
 <pre>
-<% for(var i=0;i<5;i++){ %>
-    <li><%= list[i] %></li>
-<% } %>
+&lt;% for(var i=0;i&lt;5;i++){ %&gt;
+    &lt;li&gt;&lt;%= list[i] %&gt;&lt;/li&gt;
+&lt;% } %&gt;
 </pre>
 
 

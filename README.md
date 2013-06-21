@@ -82,9 +82,44 @@ document.getElementById('result').innerHTML = res;
 
 ##模板语法##
 
-分隔符为&lt;%%&gt;
+###分隔符为&lt;%%&gt;（可自定义）###
 
-判断语句：
+####自定义实例如下####
+
+模板
+<pre>
+&lt;h1&gt;title:&lt;#= title #&gt;&lt;/h1&gt;
+&lt;# if(list.length&gt;1) { #&gt;
+    &lt;h2&gt;输出list，共有&lt;#= list.length #&gt;个元素&lt;/h2&gt;
+    &lt;ul&gt;
+        &lt;# for(var i=0;i&lt;5;i++){ #&gt;
+            &lt;li&gt;&lt;#= list[i] #&gt;&lt;/li&gt;
+        &lt;# } #&gt;
+    &lt;/ul&gt;
+&lt;# }else{ #&gt;
+    &lt;h2&gt;没有list数据&lt;/h2&gt;
+&lt;# } #&gt;
+</pre>
+
+调用
+<pre>
+NTpl.leftDelimiter = "&lt;#";
+    NTpl.rightDelimiter = "#&gt;";
+    var data={
+        "title":'啊哦~这是标题',
+        "list":[
+            'test1:这是内容',
+            'test2:2',
+            'test3:3',
+            'test4:第五项未定义，模板系统会输出空'
+        ]
+    };
+    var res = NTpl.tpl('tpl',data);
+    document.getElementById('result').innerHTML = res;
+</pre>
+
+
+####判断语句：####
 
 <pre>
 &lt;% if(list.length){ %&gt;
@@ -94,7 +129,7 @@ document.getElementById('result').innerHTML = res;
 &lt;% } %&gt;
 </pre>
 
-循环语句：
+####循环语句：####
 
 <pre>
 &lt;% for(var i=0;i&lt;5;i++){ %&gt;
@@ -102,7 +137,7 @@ document.getElementById('result').innerHTML = res;
 &lt;% } %&gt;
 </pre>
 
-###一个比较复杂的实例###
+####一个比较复杂的实例####
 
 <pre>
 //字体渲染

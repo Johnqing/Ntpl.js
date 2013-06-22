@@ -25,7 +25,6 @@
      * @returns {*}
      */
     NTpl.tpl = function(str, data){
-        data = typeof data === 'object' ? data : null;
         var fn = (function(){
             var elem = doc.getElementById(str);
             if(elem){
@@ -33,12 +32,12 @@
                     return nt.cache[str];
                 }
                 var html = /^(textarea|input)$/i.test(elem.nodeName) ? elem.value : elem.innerHTML;
-                return _compile(html, data);
+                return _compile(html);
             }else{
-                return _compile(str, data);
+                return _compile(str);
             }
         })();
-        var result =  fn( data );
+        var result = typeof data === 'object' ? fn( data ) : fn;
         fn = null;
         return result;
     };

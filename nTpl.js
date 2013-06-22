@@ -32,7 +32,7 @@
                     return nt.cache[str];
                 }
                 var html = /^(textarea|input)$/i.test(elem.nodeName) ? elem.value : elem.innerHTML;
-                return _compile(html);
+                return nt.cache[str] = _compile(html);
             }else{
                 return _compile(str);
             }

@@ -6,29 +6,16 @@
 (function(win, undefined){
     var NTpl = win.NTpl = win.NTpl || {},
         doc = win.document;
-    /**
-     * 数据解析
-     * @param data
-     * @returns {string}
-     */
-    var dataCmd = function(data){
-        var _data = '\nvar helper = this,\n';
-        for(title in data){
-            _data += (title+' = $data["'+title+'"],\n');
-        };
-        _data += '$out=0;'
-        return _data;
-    };
+        
     /**
      * 编译器
      * @param str
-     * @param data
-     * @returns {Function}
+     * @returns {Function} 返回模板拼接函数
      * @private
      */
-    var _compile  = function(str, data){
-        var fnBody = "var _tpl_array=[];\nvar fn=(function(){"+dataCmd(data)+"\n_tpl_array.push('"+_analysisStr(str)+"');\n_tplName=null;\n})();\nfn = null;\nreturn _tpl_array.join('');";
-        return new Function('$data', fnBody);
+    var _compile  = function(str){
+        var fnBody = "var _tpl_array=[];\nvar fn=(function(__data__){\nvar _tplName='';\nfor(name in __data__){\n_tplName+=('var '+name+'=__data__[\"'+name+'\"];');\n};\neval(_tplName);\n_tpl_array.push('"+_analysisStr(str)+"');\n_tplName=null;\n})(tplObj);\nfn = null;\nreturn _tpl_array.join('');";
+        return new Function('tplObj', fnBody);
     };
 
     /**

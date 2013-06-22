@@ -28,6 +28,7 @@
         var fn = (function(){
             var elem = doc.getElementById(str);
             if(elem){
+                //缓存编译后的函数模板
                 if(nt.cache[str]){
                     return nt.cache[str];
                 }
@@ -37,6 +38,7 @@
                 return _compile(str);
             }
         })();
+        //有数据则返回HTML字符串，没有数据则返回函数
         var result = typeof data === 'object' ? fn( data ) : fn;
         fn = null;
         return result;

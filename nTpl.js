@@ -3,9 +3,9 @@
  * @param data{Object} 需要渲染的json对象，可以为空。当data为{}时，仍然返回html。
  * @return 如果无data，直接返回编译后的函数；如果有data，返回html。
 */
-(function(win, undefined){
-    var NTpl = win.NTpl = win.NTpl || {},
-        doc = win.document;
+(function(window, undefined){
+    var NTpl = window.NTpl = window.NTpl || {},
+        doc = window.document;
         
     /**
      * 编译器

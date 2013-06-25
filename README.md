@@ -192,7 +192,7 @@ var fontFamily = {
         }
     ]
 };
-var familyTpl = Ntpl.tpl(fontFamily.tpl(),fontFamily);
+var familyTpl = NTpl.tpl(fontFamily.tpl(),fontFamily);
 document.getElementById('result').innerHTML = familyTpl;
 </pre>
 

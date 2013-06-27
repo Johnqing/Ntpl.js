@@ -16,7 +16,7 @@
      * @private
      */
     var _compile  = function(str){
-        var fnBody = "var _t='',_tn,fn=(function(d){\nvar _tn='';\nfor(n in d){\n_tn+=('var '+n+'=d[\"'+n+'\"];');\n};\neval(_tn);\n_t +='"+_analysisStr(str)+"';\n_tn=null;\n})(tplObj);\nfn = null;\nreturn _t;";
+        var fnBody = "var _t='',_tn,fn=(function(d){\n_tn='';\nfor(n in d){\n_tn+=('var '+n+'=d[\"'+n+'\"];');\n};\neval(_tn);\n_t +='"+_analysisStr(str)+"';\n_tn=null;\n})(tplObj);\nfn = null;\nreturn _t;";
         return new Function('tplObj', fnBody);
     };
 

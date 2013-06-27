@@ -4,6 +4,7 @@
  * @param str{String} dom结点ID，或者模板string
  * @param data{Object} 需要渲染的json对象，可以为空。当data为{}时，仍然返回html。
  * @return 如果无data，直接返回编译后的函数；如果有data，返回html。
+ * @up: 模板拼接改为字符串拼接，提升高版本浏览器模板拼接速度
 */
 (function(window, undefined){
     var NTpl = window.NTpl = window.NTpl || {},

@@ -1,6 +1,6 @@
 /**
  * @author johnqing
- * @blog http://johnqing.github.io/ 
+ * @blog http://johnqing.github.io/
  * @param str{String} dom结点ID，或者模板string
  * @param data{Object} 需要渲染的json对象，可以为空。当data为{}时，仍然返回html。
  * @return 如果无data，直接返回编译后的函数；如果有data，返回html。
@@ -8,7 +8,7 @@
 (function(window, undefined){
     var NTpl = window.NTpl = window.NTpl || {},
         doc = window.document;
-        
+
     /**
      * 编译器
      * @param str
@@ -16,7 +16,7 @@
      * @private
      */
     var _compile  = function(str){
-        var fnBody = "var _tpl_array=[];\nvar fn=(function(__data__){\nvar _tplName='';\nfor(name in __data__){\n_tplName+=('var '+name+'=__data__[\"'+name+'\"];');\n};\neval(_tplName);\n_tpl_array.push('"+_analysisStr(str)+"');\n_tplName=null;\n})(tplObj);\nfn = null;\nreturn _tpl_array.join('');";
+        var fnBody = "var _t='',_tn,fn=(function(d){\nvar _tn='';\nfor(n in d){\n_tn+=('var '+n+'=d[\"'+n+'\"];');\n};\neval(_tn);\n_t +='"+_analysisStr(str)+"';\n_tn=null;\n})(tplObj);\nfn = null;\nreturn _t;";
         return new Function('tplObj', fnBody);
     };
 
@@ -64,11 +64,11 @@
             .replace(/=\s/g,'=')
             .split(NTpl.leftDelimiter).join("\t")
             .replace(lit, "$1\r")
-            .replace(lit2, "',$1,'")
+            .replace(lit2, "'+$1+'")
             .split("\t")
-            .join("');")
+            .join("';")
             .split(NTpl.rightDelimiter)
-            .join("_tpl_array.push('")
+            .join("_t += '")
             .split("\r")
             .join("\\'");
         return tpl;

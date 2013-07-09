@@ -19,7 +19,7 @@ Ntpl模板引擎
 
 1. 引入nTpl.js是必须的
 2. 可以使用任何容器存储模板片段(示例中使用textarea作为容器)
-3. 模板内的引号，请使用双引号
+3. 模板内的引号，最好使用双引号
 <pre>
 &lt;!--textarea作为容器的好处是浏览器不会解析--&gt;
 &lt;textarea id="tpl" style="display:none"&gt;

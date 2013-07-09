@@ -112,7 +112,7 @@ var data={
         'test1:这是内容',
         'test2:2',
         'test3:3',
-        'test4:第五项未定义，模板系统会输出空'
+        'test4:第五项未定义，模板系统会输出undefined'
     ]
 };
 var res = NTpl.tpl('tpl',data);

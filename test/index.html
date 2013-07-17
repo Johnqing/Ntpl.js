@@ -1,0 +1,230 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>template test</title>
+    <script src="jquery-1.7.2.min.js"></script>
+    <script src="highcharts.js"></script>
+
+    <script src="template.js"></script>
+    <script src="baiduTemplate.js"></script>
+    <script src="nTpl.js"></script>
+
+    <script>
+// 数据量
+var length = 10000;
+// 渲染次数
+var number = 100;
+
+var data = {
+    list: []
+};
+
+for (var i = 0; i < length; i ++) {
+    data.list.push({
+        index: i,
+        user: '<strong style="color:red">Johnqing</strong>',
+        site: 'http://www.planeart.cn',
+        weibo: 'http://weibo.com/planeart',
+        QQweibo: 'http://t.qq.com/tangbin'
+    });
+};
+
+
+// 待测试的引擎列表
+var testList = [
+    {
+        name: 'NTpl',
+        tester: function () {
+            var nt= NTpl.tpl;
+            nt.ESCAPE = false;
+            for (var i = 0; i < number; i ++) {
+                nt('ntpl', data);
+            }
+        }
+    },
+    {
+        name: 'artTemplate',
+        tester: function () {
+            template.isEscape = false;
+            var source = document.getElementById('template').innerHTML;
+            var fn = template.compile(source);
+            for (var i = 0; i < number; i ++) {
+                fn(data);
+            }
+        }
+    },
+    {
+        name: 'baiduTemplate',
+        tester: function () {
+            var bt=baidu.template;
+            bt.ESCAPE = false;
+            for (var i = 0; i < number; i ++) {
+                bt('baidu-template', data);
+            }
+        }
+    }
+];
+
+var startTest = function () {
+
+    var Timer = function (){
+        this.startTime = + new Date;
+    };
+
+    Timer.prototype.stop = function(){
+        return + new Date - this.startTime;
+    };
+
+    var colors = Highcharts.getOptions().colors;
+    var categories = [];
+
+    for (var i = 0; i < testList.length; i ++) {
+        categories.push(testList[i].name);
+    }
+
+    var chart = new Highcharts.Chart({
+        chart: {
+            renderTo: 'container',
+            height: categories.length * 40,
+            type: 'bar'
+        },
+
+        title: {
+            text: 'JavaScript 模板引擎负荷测试'
+        },
+
+        subtitle: {
+            text: length + ' 条数据 × ' + number + ' 次渲染'
+        },
+
+        xAxis: {
+            categories: categories,
+            labels: {
+                align: 'right',
+                style: {
+                    fontSize: '12px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        },
+
+        yAxis: {
+            min: 0,
+            title: {
+                text: '耗时(毫秒)'
+            }
+        },
+
+        legend: {
+            enabled: false
+        },
+
+        tooltip: {
+            formatter: function() {
+                return '<b>'+ this.x +'</b><br/>'+
+                        this.y + '毫秒';
+            }
+
+        },
+
+        credits: {
+            enabled: false
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true,
+                    formatter: function () {
+                        return this.y + 'ms';
+                    }
+                }
+            }
+        },
+        series: [{
+            data : []
+        }]
+
+    });
+
+    var log = function (message) {
+        document.getElementById('log').innerHTML = message;
+    };
+
+    var tester = function (target) {
+
+
+        var time = new Timer;
+        target.tester();
+        var endTime = time.stop();
+
+        chart.series[0].addPoint({
+            color: colors.shift(),
+            y: endTime
+        });
+
+
+        if (!testList.length) {
+            log('测试已完成，请不要迷恋速度');
+            return;
+        }
+
+        target = testList.shift();
+
+        log('正在测试: ' + target.name + '..');
+
+        setTimeout(function () {
+            tester(target);
+        }, 500);
+
+    };
+
+    var target = testList.shift();
+    log('正在测试: ' + target.name + '..');
+    tester(target);
+
+};
+</script>
+
+    <!-- artTemplate 的模板 -->
+    <script id="template" type="text/tmpl">
+    <ul>
+        <% for (i = 0, l = list.length; i < l; i ++) { %>
+        <li><%=list[i].index%>. 用户: <%=list[i].user%>/ 网站：<%=list[i].site%></li>
+        <% } %></ul>
+</script>
+
+    <!-- baidu-template 的模板 -->
+    <script id="baidu-template" type="text/tmpl">
+    <ul>
+        <% for (var val, i = 0, l = list.length; i < l; i ++) { %>
+        <% val = list[i]; %>
+        <li><%:=val.index%>. 用户: <%:=val.user%>/ 网站：<%:=val.site%></li>
+        <% } %></ul>
+</script>
+    <!-- NTpl 的模板 -->
+        <script id="ntpl" type="text/tmpl">
+    <ul>
+        <% for (i = 0, l = list.length; i < l; i ++) { %>
+        <li><%=list[i].index%>. 用户: <%=list[i].user%>/ 网站：<%=list[i].site%></li>
+        <% } %></ul>
+</script>
+</head>
+
+<body>
+    <h1>引擎渲染速度竞赛</h1>
+    <p> <strong><script>document.write(length)</script></strong> 
+        条数据 × <strong><script>document.write(number)</script></strong> 
+        次渲染测试 [isEscape:false, isCache:true]
+    </p>
+    <p> <em>建议在拥有 v8 javascript 引擎的 chrome 浏览器上进行测试，避免浏览器停止响应</em>
+    </p>
+    <p>
+        <button id="button-test" onclick="this.disabled=true;startTest()" style="padding: 5px;">开始测试&raquo;</button>
+        <span id="log" style="font-size:12px">
+            <script>for (var i = 0; i < testList.length; i ++) {document.write(testList[i].name + '; ')}</script></span>
+    </p>
+    <div id="container" style="min-width: 400px; margin: 0 auto"></div>
+</body>
+</html>

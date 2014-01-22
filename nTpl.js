@@ -203,9 +203,8 @@
     }
 
     // 接口
-    NT.tpl = function(id, data, settings){
+    NT.tpl = function(id, data){
         var cache = _getCache(id);
-
         if(cache === undefined){
             return _debug({
                 id: id,

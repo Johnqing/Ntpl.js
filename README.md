@@ -91,3 +91,7 @@ var familyTpl = NTpl.tpl(fontFamily.tpl(),fontFamily);
 document.getElementById('result').innerHTML = familyTpl;
 </pre>
 
+
+## 使用项目
+
++ [360支付中心](https://pay.360.cn)

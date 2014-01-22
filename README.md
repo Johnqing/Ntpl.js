@@ -6,7 +6,7 @@ Ntpl模板引擎
 ## Ntpl 的引入
 
 ```
-    <script type="text/javascript" src="nTpl.min.js></script>
+<script type="text/javascript" src="nTpl.min.js></script>
 ```
 
 
@@ -15,14 +15,14 @@ Ntpl模板引擎
 编译模板并根据所给的数据立即渲染出结果.
 
 ```
-    NT.tpl(tpl, data);
+NT.tpl(tpl, data);
 ```
 
 仅编译模版暂不渲染，它会返回一个可重用的编译后的函数.
 
 ```
-    var compiled = NT.tpl(tpl);
-    var html = compiled(data);
+var compiled = NT.tpl(tpl);
+var html = compiled(data);
 ```
 
 自定义模板语法边界符

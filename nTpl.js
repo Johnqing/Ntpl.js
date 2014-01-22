@@ -87,14 +87,15 @@
     function _getCache(id){
         var cache = _cache[id];
 
-        if(!cache){
-            var elem = document.getElementById(id);
-            if(elem){
-                NT.compile(id, elem.value || elem.innerHTML);
-            }
+        if(cache) return cache;
+        // 新内容
+        var elem = document.getElementById(id);
+        if(elem){
+            NT.compile(id, elem.value || elem.innerHTML);
             return _cache[id];
         }
-        return cache;
+        // 纯字符串的可能性太多，所以不缓存
+        return NT.compile(id);
     }
     /**
      * js逻辑处理
@@ -121,10 +122,11 @@
      * @private
      */
     function _html(source){
-
-        source = source.replace(/('|"\\)/g, '\\$1')
+        source = source.replace(/('|"|\\)/g, '\\$1')
             .replace(/\r/g, '\\r')
             .replace(/\n/g, '\\n');
+
+        console.log(source);
 
         source = codesArr[1] + '"' + source + '"' + codesArr[2];
 
@@ -184,7 +186,6 @@
             id = null
         }
 
-
         try{
             var cache = _compile(source);
         } catch (e){
@@ -193,11 +194,11 @@
             e.name = 'Syntax Error';
             return _debug(e);
         }
-
+        // 包含id就创建id
         if(id){
             _cache[id] = cache;
         }
-        //console.log(cache);
+
         return cache;
 
     }

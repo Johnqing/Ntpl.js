@@ -90,26 +90,11 @@
         if(!cache){
             var elem = document.getElementById(id);
             if(elem){
-                exports.compile(id, elem.value || elem.innerHTML);
+                NT.compile(id, elem.value || elem.innerHTML);
             }
             return _cache[id];
         }
         return cache;
-    }
-
-    /**
-     * 数据解析
-     * @param v
-     * @param $data
-     * @returns {*}
-     */
-    function getValue(v, $data){
-        try{
-            return $data.hasOwnProperty(v) ? $data[v] : globle[$data];
-        } catch (e){
-            return;
-        }
-
     }
     /**
      * js逻辑处理
@@ -192,7 +177,7 @@
     /**
      *  globle
      */
-    exports.compile = function(id, source){
+    NT.compile = function(id, source){
         // 只传入字符串
         if(typeof source != 'string'){
             source = id;

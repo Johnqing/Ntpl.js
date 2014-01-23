@@ -5,32 +5,41 @@
     <title>Ntpl模板引擎</title>
 </head>
 <body>
-<textarea id="tpl" style="display:none">
-    <h1>title:<%= title %></h1>
-        <% if(list.length>1) { %>
-            <h2>输出list，共有<%= list.length %>个元素</h2>
-            <ul>
-                <% for(var i=0;i<5;i++){ %>
-                    <li><%= list[i] %></li>
-                <% } %>
-            </ul>
-        <% }else{ %>
-            <h2>没有list数据</h2>
+<script type="js/tpm" id="tpl" style="display:none">
+    <% if(record.length <= 0) { %>
+    <div class="details_tips"><a href="/deposit/recharge">充值</a></div>
+    <% }else{ %>
+    <table class="tb_list" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <th>时间</th>
+            <th>充值数量</th>
+            <th>充值方式</th>
+            <th>订单号</th>
+        </tr>
+        <% for(var i=0; i<record.length; i++){ %>
+        <tr>
+            <td><%= record[i].finish_time %></td>
+            <td><%= record[i].amount %></td>
+            <td><%= record[i].channel %></td>
+            <td><%= record[i].order_id %></td>
+        </tr>
         <% } %>
-</textarea>
+    </table>
+    <% } %>
+
+</script>
 <div id="result"></div>
 <script type="text/javascript" src="nTpl.js"></script>
 <script type="text/javascript">
     var data={
-        "title":'啊哦~这是标题',
-        "list":[
-            'test1:这是内容',
-            'test2:2',
-            'test3:3',
-            'test4:第五项未定义，模板系统会输出undefined'
-        ]
+        "curr_page": 1,
+        pages: 0,
+        "record":[],
+        result_code: "0000",
+        total: 0
     };
-    var res = NTpl.tpl('tpl', data);
+    var tpl = document.getElementById('tpl').innerHTML;
+    var res = NTpl.tpl(tpl, data);
     document.getElementById('result').innerHTML = res;
 </script>
 </body>

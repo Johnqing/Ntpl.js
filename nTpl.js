@@ -1,17 +1,10 @@
 (function(globle, undefined){
-    // 防止重复调用
-    if(globle.NTpl){
-        return;
-    }
-    if(!globle.exports){
-        globle.exports = {};
-    }
-    // 命名空间
-    var NT = globle.NTpl = globle.NT = exports.NT = {
-        openTag: '<%',
-        closeTag: '%>'
-    };
+    // 取得浏览器环境的NT命名空间，非浏览器环境符合commonjs规范exports出去
+    //
+    var NT = typeof module === 'undefined' ? (globle.NTpl = globle.NT = globle.NTpl || {}) : module.exports;
 
+    NT.openTag = '<%';
+    NT.closeTag = '%>';
     /*
     * unit
      */
@@ -86,11 +79,17 @@
      */
     function _getCache(id){
         var cache = _cache[id];
-
+        // 有缓存直接返回
         if(cache) return cache;
-        // 新内容
+        // 判断如果没有document，则为非浏览器环境
+        if(!globle.document){
+            return NT.compile(id);
+        }
+
+        // HTML5规定ID可以由任何不包含空格字符的字符串组成
         var elem = document.getElementById(id);
         if(elem){
+            // 取到对应id的dom，缓存其编译后的HTML模板函数
             NT.compile(id, elem.value || elem.innerHTML);
             return _cache[id];
         }
@@ -126,10 +125,7 @@
             .replace(/\r/g, '\\r')
             .replace(/\n/g, '\\n');
 
-        console.log(source);
-
         source = codesArr[1] + '"' + source + '"' + codesArr[2];
-
         return source + '\n';
     }
     function _js(source){

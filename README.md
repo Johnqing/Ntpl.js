@@ -1,16 +1,21 @@
-Ntpl模板引擎
+NT模板引擎
 =========
 
-Ntpl 是一个高效、轻量的前端 (Javascript) 模板引擎，使用 Ntpl 可以使你的代码实现数据和视图模型的分离(MVC)。
+NT 是一个高效、轻量的前端 (Javascript) 模板引擎，使用 NT 可以使你的代码实现数据和视图模型的分离(MVC)。
 
-> 介于以前的NTpl太丑的原因，现增加NT命名
+> 介于以前的NT太丑的原因，现增加NT命名
 
-## Ntpl 的引入
+## NT 的引入
 
 ```
 <script type="text/javascript" src="nTpl.min.js></script>
 ```
 
+## nodejs
+
+```
+npm install n-tpl
+```
 
 ## 使用方法
 

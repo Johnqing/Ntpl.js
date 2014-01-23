@@ -1,0 +1,18 @@
+{
+	"name": "n-tpl",
+	"version": "0.1.0",
+	"readmeFilename": "README.md",
+	"description": "NT 是一个高效、轻量的前端 (Javascript) 模板引擎，使用 NT 可以使你的代码实现数据和视图模型的分离(MVC)。",
+	"homepage": "https://github.com/Johnqing/Ntpl.js",
+	"repository": "https://github.com/Johnqing/Ntpl.js",
+	"keywords": [],
+	"main": "./nTpl.js",
+	"dependencies": {
+
+	},
+	"devDependencies": {
+
+	},
+	"optionalDependencies": {},
+	"license": "BSD"
+}

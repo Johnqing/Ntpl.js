@@ -1,25 +1,12 @@
-(function(root, factory){
-    if(typeof exports === 'object' && exports){
-        // commonjs
-        factory(module.exports);
-    } else {
-        var NT = {};
-        factory(NT);
-        if(typeof define === 'function' && define.amd){
-            // AMD
-            define(NT);
-        } else {
-            // script
-            root.NT = root.NTpl = NT;
-        }
-    }
-})(this, function(NT, undefined){
-    var globle = this;
+(function(globle, undefined){
+    // 取得浏览器环境的NT命名空间，非浏览器环境符合commonjs规范exports出去
+    //
+    var NT = typeof module === 'undefined' ? (globle.NTpl = globle.NT = globle.NTpl || {}) : module.exports;
 
     NT.openTag = '<%';
     NT.closeTag = '%>';
     /*
-     * unit
+    * unit
      */
     var logicInTpl = {},
         _cache = {},
@@ -45,15 +32,15 @@
     _forEach.call((
         // 关键字
         'break,case,catch,continue,debugger,default,delete,do,else,false,finally,for,function,if'
-            + ',in,instanceof,new,null,return,switch,this,throw,true,try,typeof,var,void,while,with'
-            // 保留字
-            + ',abstract,boolean,byte,char,class,const,double,enum,export,extends,final,float,goto'
-            + ',implements,import,int,interface,long,native,package,private,protected,public,short'
-            + ',static,super,synchronized,throws,transient,volatile'
+        + ',in,instanceof,new,null,return,switch,this,throw,true,try,typeof,var,void,while,with'
+        // 保留字
+        + ',abstract,boolean,byte,char,class,const,double,enum,export,extends,final,float,goto'
+        + ',implements,import,int,interface,long,native,package,private,protected,public,short'
+        + ',static,super,synchronized,throws,transient,volatile'
 
-            // ECMA 5 - use strict
-            + ',arguments,let,yield'
-        ).split(','), function(key){
+        // ECMA 5 - use strict
+        + ',arguments,let,yield'
+    ).split(','), function(key){
         _keyWordsMaps[key] = true;
     });
     // 错误处理
@@ -66,12 +53,12 @@
 
         if(e.message){
             content += '\n\n[message]:\n'
-                + e.message;
+                    + e.message;
         }
 
         if(e.line){
             content += '\n\n[line]:\n'
-                + e.line;
+                    + e.line;
         }
 
 
@@ -203,8 +190,10 @@
             e.name = 'Syntax Error';
             return _debug(e);
         }
-        // id存在就创建缓存
-        id && (_cache[id] = cache);
+        // 包含id就创建id
+        if(id){
+            _cache[id] = cache;
+        }
 
         return cache;
 
@@ -224,4 +213,4 @@
     }
 
 
-});
+})(this);

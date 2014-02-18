@@ -28,7 +28,7 @@ NT.tpl(tpl, data);
 仅编译模版暂不渲染，它会返回一个可重用的编译后的函数.
 
 ```
-var compiled = NT.tpl(tpl);
+var compiled = NT.compile(tpl);
 var html = compiled(data);
 ```
 

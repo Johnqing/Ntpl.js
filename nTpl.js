@@ -25,7 +25,7 @@
         _cache = {},
         vars = 'var ',
         _isNewEngine = ''.trim,
-        codesArr = _isNewEngine ? ['ret = "";', 'ret +=', ';', 'ret;'] : ['ret = [];', 'ret.push(', ')', 'ret.join("");'];
+        codesArr = _isNewEngine ? ['ret = "";', 'ret +=', ';', 'ret;'] : ['ret = [];', 'ret.push(', ');', 'ret.join("");'];
 
     // 数组迭代方法
     var _forEach = Array.prototype.forEach || function (block, thisObject) {

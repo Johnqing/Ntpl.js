@@ -84,6 +84,8 @@
             console.error(content);
         }
     }
+
+    NT.debug = _debug
     /**
      * 获取字符串缓存，没有则为设置
      * @param {String} id
@@ -176,7 +178,13 @@
         });
 
 
-        var code = 'function $getValue(key){return $data.hasOwnProperty(key) ? $data[key] : this[$data];};'
+        var code = 'function $getValue(key){' +
+                'try{' +
+                    'return $data.hasOwnProperty(key) ? $data[key] : this[$data];' +
+                '}catch(e){' +
+                    'e.id = e.id || source;e.name = "Syntax Error";NT.debug(e);' +
+                '}' +
+            '};'
             + vars + codesArr[0] + tempCode + 'return '+ codesArr[3];
         try{
             return new Function('$data', code);
